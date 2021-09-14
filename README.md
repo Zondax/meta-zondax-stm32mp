@@ -1,1 +1,1 @@
-# meta-zondax-stmp32mp
+# meta-zondax-stm32mp
