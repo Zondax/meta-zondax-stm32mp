@@ -1,0 +1,26 @@
+From 984758366664806cf0fcabccf8ea7154e47f70ef Mon Sep 17 00:00:00 2001
+From: zondax <hello@zondax.ch>
+Date: Sat, 4 Dec 2021 21:54:33 +0000
+Subject: [PATCH] stm32prog: guard legacy image format case
+
+---
+ arch/arm/mach-stm32mp/cmd_stm32prog/cmd_stm32prog.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm/mach-stm32mp/cmd_stm32prog/cmd_stm32prog.c b/arch/arm/mach-stm32mp/cmd_stm32prog/cmd_stm32prog.c
+index a20980a6ae..bc5ca23c00 100644
+--- a/arch/arm/mach-stm32mp/cmd_stm32prog/cmd_stm32prog.c
++++ b/arch/arm/mach-stm32mp/cmd_stm32prog/cmd_stm32prog.c
+@@ -78,10 +78,12 @@ static int do_stm32prog(struct cmd_tbl *cmdtp, int flag, int argc,
+ 		if (header.type == HEADER_STM32IMAGE) {
+ 			size = header.image_length + BL_HEADER_SIZE;
+ 
++#ifdef CONFIG_LEGACY_IMAGE_FORMAT
+ 			/* uImage detected in STM32IMAGE, execute the script */
+ 			if (IMAGE_FORMAT_LEGACY ==
+ 			    genimg_get_format((void *)(addr + BL_HEADER_SIZE)))
+ 				return image_source_script(addr + BL_HEADER_SIZE, "script@1");
++#endif
+ 		}
+ 	}
+ 

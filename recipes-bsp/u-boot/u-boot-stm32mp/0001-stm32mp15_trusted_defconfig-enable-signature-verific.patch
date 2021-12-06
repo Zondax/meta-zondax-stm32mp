@@ -1,0 +1,22 @@
+From f66fb0a3bb5ff27382c0de3a44d5b3a019767d92 Mon Sep 17 00:00:00 2001
+From: zondax <hello@zondax.ch>
+Date: Sat, 4 Dec 2021 21:45:36 +0000
+Subject: [PATCH] stm32mp15_trusted_defconfig: enable signature verification
+
+---
+ configs/stm32mp15_trusted_defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/configs/stm32mp15_trusted_defconfig b/configs/stm32mp15_trusted_defconfig
+index 5b4cfc4ca3..c40cab6155 100644
+--- a/configs/stm32mp15_trusted_defconfig
++++ b/configs/stm32mp15_trusted_defconfig
+@@ -11,6 +11,8 @@ CONFIG_ENV_OFFSET_REDUND=0x4C0000
+ CONFIG_DEFAULT_DEVICE_TREE="stm32mp157c-ev1"
+ CONFIG_DISTRO_DEFAULTS=y
+ CONFIG_FIT=y
++CONFIG_FIT_VERBOSE=y
++CONFIG_FIT_SIGNATURE=y
+ CONFIG_BOOTDELAY=1
+ CONFIG_BOOTCOMMAND="run bootcmd_stm32mp"
+ CONFIG_SYS_PROMPT="STM32MP> "
