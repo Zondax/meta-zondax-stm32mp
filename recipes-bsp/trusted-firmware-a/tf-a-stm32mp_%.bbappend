@@ -8,6 +8,8 @@ DEPENDS += "openssl-native python3-pycryptodomex-native"
 
 inherit python3native
 
+BL2_SIGN_ENABLE ??= ""
+
 FIP_SIGN_KEY = "${FIP_SIGN_KEYDIR}/${FIP_SIGN_KEYNAME}.pem"
 
 KEY_HASH_FILE = "${B}/public-key-hash.bin"
@@ -26,23 +28,27 @@ do_install:append() {
             fi
         fi
 
-        ${PYTHON} "${WORKDIR}/make_hash.py" "${KEY_HASH_FILE}" \
-            "${FIP_SIGN_KEY}" "${FIP_SIGN_KEY_PASS}"
+        if [ "${BL2_SIGN_ENABLE}" = "1" ]; then
+            ${PYTHON} "${WORKDIR}/make_hash.py" "${KEY_HASH_FILE}" \
+                "${FIP_SIGN_KEY}" "${FIP_SIGN_KEY_PASS}"
 
-        install -d ${D}/boot
-        install -m 644 ${KEY_HASH_FILE} ${D}/boot
+            install -d ${D}/boot
+            install -m 644 ${KEY_HASH_FILE} ${D}/boot
+        fi
     fi
 }
 
 do_deploy:append() {
     if [ "${TF_A_SIGN_ENABLE}" = "1" ]; then
-        BL2_DIRECTORY="${DEPLOYDIR}/arm-trusted-firmware"
+        if [ "${BL2_SIGN_ENABLE}" = "1" ]; then
+            BL2_DIRECTORY="${DEPLOYDIR}/arm-trusted-firmware"
 
-        for img_file in "${BL2_DIRECTORY}/"*".${TF_A_SUFFIX}"; do
-            [ -e "$img_file" ] || continue
-            ${PYTHON} "${WORKDIR}/sign_image.py" "$img_file" \
-                "${FIP_SIGN_KEY}" "${FIP_SIGN_KEY_PASS}"
-        done
+            for img_file in "${BL2_DIRECTORY}/"*".${TF_A_SUFFIX}"; do
+                [ -e "$img_file" ] || continue
+                ${PYTHON} "${WORKDIR}/sign_image.py" "$img_file" \
+                    "${FIP_SIGN_KEY}" "${FIP_SIGN_KEY_PASS}"
+            done
+        fi
     fi
 }
 
