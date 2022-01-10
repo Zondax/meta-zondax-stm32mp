@@ -1,0 +1,20 @@
+From d34fd112a9fe33a7e4a91a2592a9a0c78bdc6af2 Mon Sep 17 00:00:00 2001
+From: zondax <hello@zondax.ch>
+Date: Mon, 10 Jan 2022 10:28:22 +0000
+Subject: [PATCH] plat-stm32mp1: enable BSEC write capabilities
+
+---
+ core/arch/arm/plat-stm32mp1/conf.mk | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/core/arch/arm/plat-stm32mp1/conf.mk b/core/arch/arm/plat-stm32mp1/conf.mk
+index ea2f491b..10add561 100644
+--- a/core/arch/arm/plat-stm32mp1/conf.mk
++++ b/core/arch/arm/plat-stm32mp1/conf.mk
+@@ -170,3 +170,6 @@ CFG_STM32_EARLY_CONSOLE_UART ?= 4
+ 
+ # Generate the STM32 files
+ CFG_STM32MP15x_STM32IMAGE ?= n
++
++# Enable BSEC write capabilities
++CFG_STM32_BSEC_WRITE ?= 1
