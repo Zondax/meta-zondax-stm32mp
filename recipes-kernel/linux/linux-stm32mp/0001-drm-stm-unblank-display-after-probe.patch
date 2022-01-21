@@ -1,0 +1,33 @@
+From 40304b7d0a0056f25261ea7ce5ee2a1e0ab2b864 Mon Sep 17 00:00:00 2001
+From: zondax <hello@zondax.ch>
+Date: Fri, 21 Jan 2022 18:03:45 +0000
+Subject: [PATCH] drm/stm: unblank display after probe
+
+---
+ drivers/gpu/drm/stm/drv.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/gpu/drm/stm/drv.c b/drivers/gpu/drm/stm/drv.c
+index 411103f01..c222b6443 100644
+--- a/drivers/gpu/drm/stm/drv.c
++++ b/drivers/gpu/drm/stm/drv.c
+@@ -179,6 +179,7 @@ static int stm_drm_platform_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct drm_device *ddev;
++	struct fb_info *info;
+ 	int ret;
+ 
+ 	DRM_DEBUG("%s\n", __func__);
+@@ -199,6 +200,11 @@ static int stm_drm_platform_probe(struct platform_device *pdev)
+ 
+ 	drm_fbdev_generic_setup(ddev, 16);
+ 
++	if (ddev->fb_helper) {
++		info = ddev->fb_helper->fbdev;
++		info->fbops->fb_blank(FB_BLANK_UNBLANK, info);
++	}
++
+ 	return 0;
+ 
+ err_put:
