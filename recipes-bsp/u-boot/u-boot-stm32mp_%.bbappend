@@ -96,6 +96,8 @@ do_deploy:append() {
 
                     unset j
                 done
+
+                unset i
             fi
         fi
     fi
