@@ -23,7 +23,9 @@ do_install:append() {
                 mkdir -p "${FIP_SIGN_KEYDIR}"
 
                 echo "Generating ECDSA private key for signing BL2 and FIP"
-                openssl ecparam -name prime256v1 -genkey \
+                openssl genpkey -algorithm ec \
+                    -pkeyopt ec_paramgen_curve:prime256v1 \
+                    -aes-256-cbc -pass pass:"${FIP_SIGN_KEY_PASS}" \
                     -out "${FIP_SIGN_KEYDIR}/${FIP_SIGN_KEYNAME}".pem
             fi
         fi
