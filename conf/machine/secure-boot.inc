@@ -3,6 +3,7 @@ TF_A_SIGN_ENABLE ?= "1"
 #BL2_SIGN_ENABLE ?= "1"
 FIP_GENERATE_KEYS ?= "1"
 FIP_SIGN_KEYNAME ?= "root"
+FIP_SIGN_KEY_PASS ?= "dummy"
 FIP_SIGN_KEYDIR ?= "${TOPDIR}/keys"
 
 # Enable kernel verification
