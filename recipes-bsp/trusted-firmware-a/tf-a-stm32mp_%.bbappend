@@ -8,7 +8,12 @@ DEPENDS += "openssl-native python3-pycryptodomex-native"
 
 inherit python3native
 
-BL2_SIGN_ENABLE ??= ""
+BL2_SIGN_ENABLE ?= "0"
+
+FIP_GENERATE_KEYS ?= "0"
+
+FIP_SIGN_KEYNAME ?= ""
+FIP_SIGN_KEYDIR ?= ""
 
 FIP_SIGN_KEY = "${FIP_SIGN_KEYDIR}/${FIP_SIGN_KEYNAME}.pem"
 
