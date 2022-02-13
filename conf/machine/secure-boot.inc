@@ -1,10 +1,10 @@
 # Enable bootloader verification
 TF_A_SIGN_ENABLE ?= "1"
 #BL2_SIGN_ENABLE ?= "1"
-FIP_GENERATE_KEYS ?= "1"
-FIP_SIGN_KEYNAME ?= "root"
-FIP_SIGN_KEY_PASS ?= "dummy"
-FIP_SIGN_KEYDIR ?= "${TOPDIR}/keys"
+TF_A_GENERATE_KEYS ?= "1"
+TF_A_SIGN_KEYNAME ?= "root"
+TF_A_SIGN_KEYDIR ?= "${TOPDIR}/keys"
+TF_A_SIGN_KEY_PASS ?= "dummy"
 
 # Enable kernel verification
 FIT_GENERATE_KEYS ?= "1"
